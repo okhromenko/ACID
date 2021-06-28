@@ -1,0 +1,4 @@
+Toolchain 'MinGW' is not found Configure Disable profile
+
+Cannot get compiler information:
+	Cannot run program "C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin\g++.exe" (in directory "C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-mingw"): CreateProcess error=2, Не удается найти указанный файл
