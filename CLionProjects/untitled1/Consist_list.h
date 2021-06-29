@@ -125,6 +125,9 @@ public:
 		}
 	}
 
+	void Insert(){
+
+	}
 
 	void PushFront(T value) {
 		auto element = new Node<T>();
