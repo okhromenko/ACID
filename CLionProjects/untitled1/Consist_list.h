@@ -181,7 +181,15 @@ public:
 		return iter_node->Value;
 	}
 
-	ListIterator<T>& operator++(){
+	ListIterator<T> operator++(int){
+
+	}
+
+    ListIterator<T> operator--(int){
+
+    }
+
+    ListIterator<T>& operator++(){
 		Node<T>* prev = iter_node;
 		iter_list->acquire(&iter_node, iter_node->next);
 		iter_list->release(prev);
