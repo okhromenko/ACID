@@ -6,8 +6,8 @@ Id flags:
 
 The output was:
 0
-?????????????? ?????????? Microsoft (R) C/C++ ?????? 19.29.30037 ??? x86
-(C) ?????????? ?????????? (Microsoft Corporation).  ??? ????? ????????.
+Оптимизирующий компилятор Microsoft (R) C/C++ версии 19.29.30037 для x86
+(C) Корпорация Майкрософт (Microsoft Corporation).  Все права защищены.
 
 CMakeCCompilerId.c
 Microsoft (R) Incremental Linker Version 14.29.30037.0
@@ -30,8 +30,8 @@ Id flags:
 
 The output was:
 0
-?????????????? ?????????? Microsoft (R) C/C++ ?????? 19.29.30037 ??? x86
-(C) ?????????? ?????????? (Microsoft Corporation).  ??? ????? ????????.
+Оптимизирующий компилятор Microsoft (R) C/C++ версии 19.29.30037 для x86
+(C) Корпорация Майкрософт (Microsoft Corporation).  Все права защищены.
 
 CMakeCXXCompilerId.cpp
 Microsoft (R) Incremental Linker Version 14.29.30037.0
@@ -50,24 +50,24 @@ The CXX compiler identification is MSVC, found in "C:/Users/79841/CLionProjects/
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: C:/Users/79841/CLionProjects/untitled1/cmake-build-debug-visual-studio/CMakeFiles/CMakeTmp
 
-Run Build Command(s):nmake /nologo cmTC_5197f\fast && 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe  -f CMakeFiles\cmTC_5197f.dir\build.make /nologo -L                  CMakeFiles\cmTC_5197f.dir\build
-Building C object CMakeFiles/cmTC_5197f.dir/CMakeCCompilerABI.c.obj
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @C:\Users\79841\AppData\Local\Temp\nm2519.tmp
+Run Build Command(s):nmake /nologo cmTC_2119e\fast && 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe  -f CMakeFiles\cmTC_2119e.dir\build.make /nologo -L                  CMakeFiles\cmTC_2119e.dir\build
+Building C object CMakeFiles/cmTC_2119e.dir/CMakeCCompilerABI.c.obj
+	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @C:\Users\79841\AppData\Local\Temp\nm6F2E.tmp
 CMakeCCompilerABI.c
-Linking C executable cmTC_5197f.exe
-	"D:\CLion\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_5197f.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\mt.exe --manifests -- D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\cmTC_5197f.dir\objects1.rsp @C:\Users\79841\AppData\Local\Temp\nm2597.tmp
+Linking C executable cmTC_2119e.exe
+	"D:\CLion\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_2119e.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\mt.exe --manifests -- D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\cmTC_2119e.dir\objects1.rsp @C:\Users\79841\AppData\Local\Temp\nm70D5.tmp
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: C:/Users/79841/CLionProjects/untitled1/cmake-build-debug-visual-studio/CMakeFiles/CMakeTmp
 
-Run Build Command(s):nmake /nologo cmTC_a2c6a\fast && 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe  -f CMakeFiles\cmTC_a2c6a.dir\build.make /nologo -L                  CMakeFiles\cmTC_a2c6a.dir\build
-Building CXX object CMakeFiles/cmTC_a2c6a.dir/CMakeCXXCompilerABI.cpp.obj
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @C:\Users\79841\AppData\Local\Temp\nm28E2.tmp
+Run Build Command(s):nmake /nologo cmTC_f2f1a\fast && 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe  -f CMakeFiles\cmTC_f2f1a.dir\build.make /nologo -L                  CMakeFiles\cmTC_f2f1a.dir\build
+Building CXX object CMakeFiles/cmTC_f2f1a.dir/CMakeCXXCompilerABI.cpp.obj
+	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @C:\Users\79841\AppData\Local\Temp\nm7364.tmp
 CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_a2c6a.exe
-	"D:\CLion\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_a2c6a.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\mt.exe --manifests -- D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\cmTC_a2c6a.dir\objects1.rsp @C:\Users\79841\AppData\Local\Temp\nm2960.tmp
+Linking CXX executable cmTC_f2f1a.exe
+	"D:\CLion\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_f2f1a.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\mt.exe --manifests -- D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\cmTC_f2f1a.dir\objects1.rsp @C:\Users\79841\AppData\Local\Temp\nm73F2.tmp
 
 
 

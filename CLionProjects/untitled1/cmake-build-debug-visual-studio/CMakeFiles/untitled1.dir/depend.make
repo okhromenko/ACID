@@ -3,8 +3,4 @@
 
 CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj: ..\Consist_list.h
 CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj: ..\Google_tests\Source.cpp
-CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj: ..\catch_amalgamated.hpp
-
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj: ..\catch_amalgamated.cpp
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj: ..\catch_amalgamated.hpp
 
