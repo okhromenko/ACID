@@ -7,13 +7,21 @@
 #IncludeRegexTransform: 
 
 C:/Users/79841/CLionProjects/untitled1/Consist_list.h
+mutex
+-
+shared_mutex
+-
 
-C:/Users/79841/CLionProjects/untitled1/Source.cpp
-catch_amalgamated.hpp
+C:/Users/79841/CLionProjects/untitled1/Google_tests/Source.cpp
+../catch_amalgamated.hpp
 C:/Users/79841/CLionProjects/untitled1/catch_amalgamated.hpp
-Consist_list.h
+../Consist_list.h
 C:/Users/79841/CLionProjects/untitled1/Consist_list.h
-iostream
+barrier
+-
+thread
+-
+barrier
 -
 
 C:/Users/79841/CLionProjects/untitled1/catch_amalgamated.hpp

@@ -1,0 +1,15 @@
+Determining if the include file pthread.h exists failed with the following output:
+Change Dir: C:/Users/79841/CLionProjects/untitled1/cmake-build-debug-visual-studio/CMakeFiles/CMakeTmp
+
+Run Build Command(s):nmake /nologo cmTC_f4c5d\fast && 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe  -f CMakeFiles\cmTC_f4c5d.dir\build.make /nologo -L                  CMakeFiles\cmTC_f4c5d.dir\build
+Building C object CMakeFiles/cmTC_f4c5d.dir/CheckIncludeFile.c.obj
+	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @C:\Users\79841\AppData\Local\Temp\nm1167.tmp
+CheckIncludeFile.c
+C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles\CMakeTmp\CheckIncludeFile.c(1): fatal error C1083: Не удается открыть файл включение: pthread.h: No such file or directory,
+NMAKE : fatal error U1077: D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe : тючтЁр∙хээ√щ ъюф "0x2"
+Stop.
+NMAKE : fatal error U1077: D:\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\nmake.exe : тючтЁр∙хээ√щ ъюф "0x2"
+Stop.
+
+
+
