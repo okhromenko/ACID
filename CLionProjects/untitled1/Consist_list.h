@@ -1,15 +1,19 @@
 #pragma once
 #include <mutex>
 #include <shared_mutex>
+#include <atomic>
 
 template <class T>
 class Node {
 public:
     T Value;
-    int Ref_count = 0;
-    bool delete_tag;
+    std::atomic<int> Ref_count = 0;
+    std::atomic<bool> delete_tag;
     Node* next;
     Node* prev;
+    std::shared_mutex m;
+
+    ~Node(){}
 };
 
 template <class T>
@@ -23,16 +27,13 @@ class List {
     Node<T>* start;
     Node<T>* finish;
 
-    std::shared_mutex mutex;
-
     int countNode;
+
 public:
+
     template<class T> friend class ListIterator;
 
     List() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
-
         start = new Node<T>();
         finish = new Node<T>();
         countNode = 0;
@@ -52,7 +53,6 @@ public:
     }
 
     ~List() {
-
         Node<T>* node = start;
 
         while (node != nullptr) {
@@ -60,19 +60,16 @@ public:
             delete node;
             node = pnode;
         }
-        //		_CrtDumpMemoryLeaks();
     }
 
 
     void acquire(Node<T>** node, Node<T>* pnode) {
-
         *node = pnode;
         pnode->Ref_count++;
     }
 
 
     void release(Node<T>* node) {
-
         node->Ref_count--;
 
         if (node->Ref_count == 0) {
@@ -87,50 +84,38 @@ public:
     }
 
     int CountNode() {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
         return countNode;
     }
 
     int getRef_count(Node<T>* node) {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
         return node->Ref_count;
     }
 
-    Node<T>* next(Node<T>* node) {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
+    Node<T>* next_node(Node<T>* node) {
         return node->next;
     }
 
-    Node<T>* prev(Node<T>* node) {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
+    Node<T>* prev_node(Node<T>* node) {
         return node->prev;
     }
 
     T getValue(Node<T>* ptr) {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
         return ptr->Value;
     }
 
     Node<T>* getFirst() {
+        return start;
+    }
 
-        std::shared_lock<std::shared_mutex> lock(mutex);
-        return head->next;
+    bool Empty(){
+        return countNode == 0;
     }
 
     Node<T>* getLast() {
-
-        std::shared_lock<std::shared_mutex> lock(mutex);
-        return tail->prev;
+        return finish;
     }
 
     ListIterator<T> begin() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
             ListIterator<T> iter(this, &start);
             return iter;
@@ -142,8 +127,6 @@ public:
     }
 
     ListIterator<T> end() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
             ListIterator<T> iter(this, &finish);
             return iter;
@@ -154,80 +137,162 @@ public:
         }
     }
 
-    void Insert() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
-
+    void PushFront(const T& value) {
+        Insert(begin(), value);
     }
 
-    void PushFront(T value) {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
-
-        auto element = new Node<T>();
-
-        element->next = start->next;
-        element->prev = start;
-        element->Value = value;
-        element->Ref_count += 2;
-
-        element->next->prev = element;
-        start->next = element;
-        countNode++;
+    void PushBack(const T& value) {
+        Insert(end(), value);
     }
 
-    void Erase(Node<T>* node) {
+    ListIterator<T> Insert(ListIterator<T> it, const T& value) {
+        Node<T>* node_next = it.iter_node;
 
-        std::unique_lock<std::shared_mutex> lock(mutex);
-        Node<T>* next_node = node->next;
-        Node<T>* prev_node = node->prev;
-        node->delete_tag = true;
-
-        if (node != finish) {
-            next_node->prev = prev_node;
-            node->Ref_count -= 1;
+        if (node_next == head){
+            node_next = node_next->next;
         }
 
-        if (node != start) {
-            prev_node->next = next_node;
-            node->Ref_count -= 1;
+        std::unique_lock<std::shared_mutex> lock_write(node_next->m);
+
+        for (bool retry = true; retry;){
+            retry = false;
+
+            auto node_prev = node_next->prev;
+            assert(node_prev->Ref_count);
+
+            std::unique_lock<std::shared_mutex> lock_write_1(node_prev->m);
+
+            if (node_prev->next == node_next){
+                auto node = new Node<T>(value);
+
+                node->next = node_next;
+                node->prev = node_prev;
+                node_next->prev = node;
+                node_prev->next = node;
+                node->Ref_count += 2;
+
+                countNode++;
+            }
+            else{
+                retry = true;
+            }
+
+            lock_write.unlock();
+            lock_write_1.unlock();
         }
-        countNode--;
+    }
+
+    void PopFront(){
+        Erase(begin());
+    }
+
+    void PopBack(){
+        Erase(end());
+    }
+
+    void Erase(ListIterator<T> &it){
+        Node<T> *node = it.iter_node;
+
+        for (bool retry = true; retry;){
+            retry = false;
+
+            if (node->delete_tag){
+                return;
+            }
+
+            std::shared_lock<std::shared_mutex> lock_read(node->m);
+            auto prev = node->prev;
+            assert(prev->Ref_count);
+            prev->Ref_count++;
+
+            auto next = node->next;
+            assert(next->Ref_count);
+            next->Ref_count++;
+
+            lock_read.unlock();
+
+            std::unique_lock<std::shared_mutex> lock_write_1(prev->m);
+            std::shared_lock<std::shared_mutex> lock_read_1(node->m);
+            std::unique_lock<std::shared_mutex> lock_write_2(next->m);
+
+            if (prev->next == node && next->prev == node){
+                node->delete_tag = true;
+
+                node->next->prev = prev;
+                node->prev->next = next;
+
+                countNode--;
+            }
+            else {
+                retry = true;
+            }
+
+            prev->Ref_count--;
+            next->Ref_count--;
+            lock_write_1.unlock();
+            lock_read_1.unlock();
+            lock_write_2.unlock();
+        }
     }
 };
 
 
 template <class T>
 class ListIterator {
-
     Node<T>* iter_node;
     List<T>* iter_list;
 
 public:
 
     ListIterator<T>() {
-
         iter_node = nullptr;
     }
 
 
     ListIterator<T>(List<T>* list, Node<T>** node) {
-
         iter_list = list;
         iter_node = *node;
 
-        iter_node->Ref_count += 1;
+        iter_node->Ref_count++;
     }
 
-    int& operator*() {
+    ~ListIterator(){
+        if (!iter_node){
+            return;
+        }
+        iter_list->release(iter_node);
+        iter_list = nullptr;
+    }
 
-        std::shared_lock<std::shared_mutex> lock(iter_list->mutex);
+
+    friend bool operator==(const ListIterator<T>& iter_1, const ListIterator<T>& iter_2){
+        return iter_1.iter_node == iter_2.iter_node;
+    }
+
+    friend bool operator!=(const ListIterator<T>& iter_1, const ListIterator<T>& iter_2){
+        return iter_1.iter_node != iter_2.iter_node;
+    }
+
+    ListIterator<T>& operator=(const ListIterator<T> iter){
+        std::unique_lock<std::shared_mutex> write_lock(iter_node->m);
+        if (iter.iter_node != iter_node){
+            std::shared_lock<std::shared_mutex> read_lock(iter.iter_node->m);
+
+            iter_node = iter.iter_node;
+            iter_list = iter.iter_list;
+            iter_node->Ref_count++;
+        }
+        return *this;
+    }
+
+    T& operator*() {
+        std::shared_lock<std::shared_mutex> lock(iter_node->m);
         return iter_node->Value;
     }
 
-    ListIterator<T>& operator++() {
 
-        std::unique_lock<std::shared_mutex> lock(iter_list->mutex);
+    ListIterator<T>& operator++() {
+        std::unique_lock<std::shared_mutex> lock(iter_node->m);
         Node<T>* prev(iter_node);
         iter_list->acquire(&iter_node, iter_node->next);
         iter_list->release(prev);
@@ -235,8 +300,7 @@ public:
     }
 
     ListIterator<T>& operator--() {
-
-        std::unique_lock<std::shared_mutex> lock(iter_list->mutex);
+        std::unique_lock<std::shared_mutex> lock(iter_node->m);
         Node<T>* next(iter_node);
         iter_list->acquire(&iter_node, iter_node->prev);
         iter_list->release(next);
@@ -244,18 +308,15 @@ public:
     }
 
     ListIterator<T> operator++(int){
-
         ListIterator<T> prev(*this);
         ++(*this);
         return prev;
     }
 
     ListIterator<T> operator--(int){
-
         ListIterator<T> iter(*this);
         --(*this);
         return iter;
     }
 };
-
 

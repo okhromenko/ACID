@@ -1,19 +1,14 @@
-//#define _CRTDBG_MAP_ALLOC
-//#include <crtdbg.h>
-//#ifdef _DEBUG
-//#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
-//#define new DEBUG_NEW
-//#endif
-
-
 #include "gtest/gtest.h"
-#include "../Consist_List.h"
+#include "../Consist_list.h"
 #include <barrier>
 #include <thread>
 
 
 
 using namespace std;
+
+class ListTest : public ::testing::Test {};
+class ListTestThread : public ::testing::Test {};
 
 TEST(ListTest, PushFront) {
 
@@ -294,4 +289,9 @@ TEST(ListTestThread, EraseWithIter){
 
 List<int> list;
 
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
