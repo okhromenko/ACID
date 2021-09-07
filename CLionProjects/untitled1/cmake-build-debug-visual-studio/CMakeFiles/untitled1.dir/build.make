@@ -60,57 +60,36 @@ include CMakeFiles\untitled1.dir\progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles\untitled1.dir\flags.make
 
-CMakeFiles\untitled1.dir\Source.cpp.obj: CMakeFiles\untitled1.dir\flags.make
-CMakeFiles\untitled1.dir\Source.cpp.obj: ..\Source.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/untitled1.dir/Source.cpp.obj"
+CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj: CMakeFiles\untitled1.dir\flags.make
+CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj: ..\Google_tests\Source.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/untitled1.dir/Google_tests/Source.cpp.obj"
 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\untitled1.dir\Source.cpp.obj /FdCMakeFiles\untitled1.dir\ /FS -c C:\Users\79841\CLionProjects\untitled1\Source.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj /FdCMakeFiles\untitled1.dir\ /FS -c C:\Users\79841\CLionProjects\untitled1\Google_tests\Source.cpp
 <<
 
-CMakeFiles\untitled1.dir\Source.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/Source.cpp.i"
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe > CMakeFiles\untitled1.dir\Source.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\79841\CLionProjects\untitled1\Source.cpp
+CMakeFiles\untitled1.dir\Google_tests\Source.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/Google_tests/Source.cpp.i"
+	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe > CMakeFiles\untitled1.dir\Google_tests\Source.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\79841\CLionProjects\untitled1\Google_tests\Source.cpp
 <<
 
-CMakeFiles\untitled1.dir\Source.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/Source.cpp.s"
+CMakeFiles\untitled1.dir\Google_tests\Source.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/Google_tests/Source.cpp.s"
 	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\untitled1.dir\Source.cpp.s /c C:\Users\79841\CLionProjects\untitled1\Source.cpp
-<<
-
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj: CMakeFiles\untitled1.dir\flags.make
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj: ..\catch_amalgamated.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/untitled1.dir/catch_amalgamated.cpp.obj"
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj /FdCMakeFiles\untitled1.dir\ /FS -c C:\Users\79841\CLionProjects\untitled1\catch_amalgamated.cpp
-<<
-
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/catch_amalgamated.cpp.i"
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe > CMakeFiles\untitled1.dir\catch_amalgamated.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\79841\CLionProjects\untitled1\catch_amalgamated.cpp
-<<
-
-CMakeFiles\untitled1.dir\catch_amalgamated.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/catch_amalgamated.cpp.s"
-	D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\untitled1.dir\catch_amalgamated.cpp.s /c C:\Users\79841\CLionProjects\untitled1\catch_amalgamated.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\untitled1.dir\Google_tests\Source.cpp.s /c C:\Users\79841\CLionProjects\untitled1\Google_tests\Source.cpp
 <<
 
 # Object files for target untitled1
 untitled1_OBJECTS = \
-"CMakeFiles\untitled1.dir\Source.cpp.obj" \
-"CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj"
+"CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj"
 
 # External object files for target untitled1
 untitled1_EXTERNAL_OBJECTS =
 
-untitled1.exe: CMakeFiles\untitled1.dir\Source.cpp.obj
-untitled1.exe: CMakeFiles\untitled1.dir\catch_amalgamated.cpp.obj
+untitled1.exe: CMakeFiles\untitled1.dir\Google_tests\Source.cpp.obj
 untitled1.exe: CMakeFiles\untitled1.dir\build.make
 untitled1.exe: CMakeFiles\untitled1.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable untitled1.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable untitled1.exe"
 	"D:\CLion\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\untitled1.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100190~1.0\x86\mt.exe --manifests -- D:\Community\VC\Tools\MSVC\14.29.30037\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\untitled1.dir\objects1.rsp @<<
  /out:untitled1.exe /implib:untitled1.lib /pdb:C:\Users\79841\CLionProjects\untitled1\cmake-build-debug-visual-studio\untitled1.pdb /version:0.0 /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

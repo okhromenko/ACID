@@ -4,10 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/79841/CLionProjects/untitled1/Source.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Source.cpp.obj"
-  "C:/Users/79841/CLionProjects/untitled1/catch_amalgamated.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/catch_amalgamated.cpp.obj"
+  "C:/Users/79841/CLionProjects/untitled1/Google_tests/Source.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Google_tests/Source.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "MSVC")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

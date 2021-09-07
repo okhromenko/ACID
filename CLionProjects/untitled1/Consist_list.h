@@ -1,13 +1,18 @@
+
+#ifndef UNTITLED1_CONSIST_LIST_H
+#define UNTITLED1_CONSIST_LIST_H
+
 #pragma once
+
 
 template <class T>
 class Node {
 public:
-	T Value;
-	int Ref_count = 0;
-	bool delete_tag;
-	Node* next;
-	Node* prev;
+    T Value;
+    int Ref_count = 0;
+    bool delete_tag;
+    Node* next;
+    Node* prev;
 };
 
 template <class T>
@@ -15,193 +20,170 @@ class ListIterator;
 
 template <class T>
 class List {
-	Node<T>* head;
-	Node<T>* tail;
+    Node<T>* head;
+    Node<T>* tail;
 
-	Node<T>* start;
-	Node<T>* finish;
+    Node<T>* n_remove_first;
+    Node<T>* n_remove_last;
 
-	int countNode;
+    int countNode;
+
 public:
+    friend class ListIterator<T>;
 
-	List() {
-		start = new Node<T>();
-		finish = new Node<T>();
-		countNode = 0;
+    List() {
+        n_remove_first = new Node<T>();
+        n_remove_last = new Node<T>();
+        countNode = 0;
 
-		start->Ref_count = 1;
-		start->next = finish;
-		start->prev = nullptr;
-		start->Value = -1;
+        n_remove_first->Ref_count = 1;
+        n_remove_first->next = n_remove_last;
+        n_remove_first->prev = nullptr;
+        n_remove_first->Value = 000;
 
-		finish->Ref_count = 1;
-		finish->next = nullptr;
-		finish->prev = start;
-		finish->Value = -2;
+        n_remove_last->Ref_count = 1;
+        n_remove_last->next = nullptr;
+        n_remove_last->prev = n_remove_first;
+        n_remove_last->Value = 001;
 
-		head = start;
-		tail = finish;
-	}
+        head = n_remove_first;
+        tail = n_remove_last;
+    }
 
-	~List() {
-		Node<T>* node = start;
+    ~List() {
+        Node<T>* node = n_remove_first;
 
-		while (node != nullptr) {
-			Node<T>* pnode = node->next;
-			delete node;
-			node = pnode;
-		}
-//		_CrtDumpMemoryLeaks();
-	}
+        while (node != nullptr) {
+            Node<T>* pnode = node->next;
+            delete node;
+            node = pnode;
+        }
+    }
 
 
-	void acquire(Node<T>** node, Node<T>* pnode) {
-	    *node = pnode;
-        (*node)->Ref_count += 1;
-	}
+    void acquire(Node<T>** node, Node<T>* pnode) {
+        *node = pnode;
+        pnode->Ref_count++;
+    }
 
 
     void release(Node<T>* node) {
-		node->Ref_count -= 1;
+        node->Ref_count--;
 
-		if (node->Ref_count == 0) {
-			if (!node->delete_tag) {
-				release(node->next);
-				release(node->prev);
-			}
-			node->next = nullptr;
-			node->prev = nullptr;
-			delete node;
-		}
-	}
+    }
 
-	int CountNode() {
-		return countNode;
-	}
+    int CountNode() {
+        return countNode;
+    }
 
-	int getRef_count(Node<T>* node) {
-		return node->Ref_count;
-	}
+    int getRef_count(Node<T>* node) {
+        return node->Ref_count;
+    }
 
-	Node<T>* next(Node<T>* node) {
-		return node->next;
-	}
+    Node<T>* next(Node<T>* node) {
+        return node->next;
+    }
 
-	Node<T>* prev(Node<T>* node) {
-		return node->prev;
-	}
+    Node<T>* prev(Node<T>* node) {
+        return node->prev;
+    }
 
-	T getValue(Node<T>* ptr) {
-		return ptr->Value;
-	}
+    T getValue(Node<T>* ptr) {
+        return ptr->Value;
+    }
 
-	Node<T>* getFirst() {
-		return head->next;
-	}
+    Node<T>* getFirst() {
+        return head;
+    }
 
-	Node<T>* getLast() {
-		return tail->prev;
-	}
+    Node<T>* getLast() {
+        return tail;
+    }
 
-	ListIterator<T> begin() {
-		if (countNode == 0) {
-			ListIterator<T> iter(this, &start);
-			return iter;
-		}
-		else {
-			ListIterator<T> iter(this, &start->next);
-			return iter;
-		}
-	}
+    ListIterator<T> begin() {
+    }
 
-	ListIterator<T> end() {
-		if (countNode == 0) {
-			ListIterator<T> iter(this, &finish);
-			return iter;
-		}
-		else {
-			ListIterator<T> iter(this, &finish->prev);
-			return iter;
-		}
-	}
+    ListIterator<T> end() {
+    }
 
+    void Insert() {
 
-	void PushFront(T value) {
-		auto element = new Node<T>();
+    }
 
-		element->next = start->next;
-		element->prev = start;
-		element->Value = value;
-		element->Ref_count += 2;
+    void PushFront(T value) {
+        auto element = new Node<T>();
 
-		element->next->prev = element;
-		start->next = element;
-		countNode++;
-	}
+        element->next = n_remove_first->next;
+        element->prev = n_remove_first;
+        element->Value = value;
+        element->Ref_count += 2;
 
-	void Erase(Node<T>* node) {
-		Node<T>* next_node = node->next;
-		Node<T>* prev_node = node->prev;
-		node->delete_tag = true;
-		
-		if (node != finish) {
-			next_node->prev = prev_node;
-			node->Ref_count -= 1;
-		}
+        element->next->prev = element;
+        n_remove_first->next = element;
+        countNode++;
+    }
 
-		if (node != start) {
-			prev_node->next = next_node;
-			node->Ref_count -= 1;
-		}
-		countNode--;
-	}
+    void Erase(Node<T>* node) {
+        Node<T>* next_node = node->next;
+        Node<T>* prev_node = node->prev;
+        node->delete_tag = true;
+
+        if (node != n_remove_last) {
+            next_node->prev = prev_node;
+            node->Ref_count -= 1;
+        }
+
+        if (node != n_remove_first) {
+            prev_node->next = next_node;
+            node->Ref_count -= 1;
+        }
+        countNode--;
+    }
 };
 
 
 template <class T>
 class ListIterator {
-	Node<T>* iter_node;
-	List<T>* iter_list;
+
+    Node<T>* iter_node;
+    List<T>* iter_list;
 
 public:
 
-	ListIterator<T>() {
-		iter_node = nullptr;
-	}
-
-
-	ListIterator<T>(List<T>* list, Node<T>** node) {
-		iter_list = list;
-		iter_node = *node;
-
-		iter_node->Ref_count += 1;
-	}
-
-	int& operator*() {
-		return iter_node->Value;
-	}
-
-	ListIterator<T> operator++(int){
-
-	}
-
-    ListIterator<T> operator--(int){
-
+    ListIterator<T>() {
+        iter_node = nullptr;
     }
 
-    ListIterator<T>& operator++(){
-		Node<T>* prev = iter_node;
-		iter_list->acquire(&iter_node, iter_node->next);
-		iter_list->release(prev);
-		return *this;
-	}
 
-	ListIterator<T>& operator--(){
-		Node<T>* next = iter_node;
-		iter_list->acquire(&iter_node, iter_node->prev);
-		iter_list->release(next);
-		return *this;
-	}
+    int& operator*() {
+        return iter_node->Value;
+    }
+
+    ListIterator<T>& operator++() {
+        Node<T>* prev(iter_node);
+        iter_list->acquire(&iter_node, iter_node->next);
+        iter_list->release(prev);
+        return *this;
+    }
+
+    ListIterator<T>& operator--() {
+        Node<T>* next(iter_node);
+        iter_list->acquire(&iter_node, iter_node->prev);
+        iter_list->release(next);
+        return *this;
+    }
+
+    ListIterator<T> operator++(int){
+        ListIterator<T> prev(*this);
+        ++(*this);
+        return prev;
+    }
+
+    ListIterator<T> operator--(int){
+        ListIterator<T> iter(*this);
+        --(*this);
+        return iter;
+    }
 };
 
-
+#endif //UNTITLED1_CONSIST_LIST_H

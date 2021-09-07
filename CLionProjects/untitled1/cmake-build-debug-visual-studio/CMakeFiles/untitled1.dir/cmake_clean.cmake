@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/untitled1.dir/Source.cpp.obj"
-  "CMakeFiles/untitled1.dir/catch_amalgamated.cpp.obj"
+  "CMakeFiles/untitled1.dir/Google_tests/Source.cpp.obj"
   "untitled1.exe"
   "untitled1.exe.manifest"
   "untitled1.lib"
