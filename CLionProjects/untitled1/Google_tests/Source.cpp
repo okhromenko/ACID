@@ -14,6 +14,7 @@
 
 using namespace std;
 
+
 TEST(ListTest, PushFront) {
 
 List<int> list;
@@ -39,6 +40,66 @@ nextNode = list.next(nextNode);
 }
 
 EXPECT_EQ(list.getValue(nextNode), 50);
+}
+
+
+TEST(ListTest, Insert) {
+
+    List<int> list;
+    ListIterator<int> iter = list.begin();
+
+    int n_list = 1000;
+
+    for (int i = n_list; i > 0; i--) {
+        list.Insert(iter, i);
+    }
+
+    EXPECT_EQ(list.CountNode(), 1000);
+
+    EXPECT_EQ(list.getValue(list.getFirst()), 1);
+    EXPECT_EQ(list.getValue(list.next(list.getFirst())), 2);
+
+    EXPECT_EQ(list.getValue(list.getLast()), 1000);
+    EXPECT_EQ(list.getValue(list.prev(list.getLast())), 999);
+
+    auto nextNode = list.getFirst();
+
+    for (int i = 50; i > 1; i--) {
+        nextNode = list.next(nextNode);
+    }
+}
+
+TEST(ListTest, InsertBack) {
+
+    List<int> list;
+    ListIterator<int> iter = list.end();
+
+    int n_list = 100;
+
+    for (int i = n_list; i > 0; i--) {
+        list.Insert(iter, i);
+    }
+
+    EXPECT_EQ(list.CountNode(), 100);
+    EXPECT_EQ(list.getValue(list.getFirst()), 100);
+    EXPECT_EQ(list.getValue(list.getLast()), 1);
+}
+
+
+TEST(ListTest, PushBack) {
+
+    List<int> list;
+
+    int n_list = 100;
+
+    for (int i = n_list; i > 0; i--) {
+        list.PushBack(i);
+    }
+
+    EXPECT_EQ(list.CountNode(), 100);
+
+    EXPECT_EQ(list.getValue(list.getLast()), 1);
+    EXPECT_EQ(list.getValue((list.getFirst())), 100);
 }
 
 TEST(ListTest, BeginEnd) {
@@ -75,8 +136,6 @@ for (int i = n_list; i > 0; i--){
 list.PushFront(i);
 }
 
-ListIterator<int> iter_begin = list.begin();
-ListIterator<int> iter_end = list.end();
 
 EXPECT_EQ(list.getRef_count(list.getFirst()), 3);
 EXPECT_EQ(list.getRef_count(list.next(list.getFirst())), 2);
@@ -219,6 +278,7 @@ ListIterator<int> p = list.begin();
 ++p;
 
 EXPECT_EQ(*iter, 2);
+EXPECT_EQ(*p, 2);
 
 list.Erase(list.next(list.getFirst()));
 
