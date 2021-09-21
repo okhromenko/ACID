@@ -1,4 +1,6 @@
-#pragma once
+
+#ifndef UNTITLED1_CONSIST_LIST_H
+#define UNTITLED1_CONSIST_LIST_H
 #include <mutex>
 #include <shared_mutex>
 
@@ -12,67 +14,59 @@ public:
     Node* prev;
 };
 
+
 template <class T>
 class ListIterator;
 
+
 template <class T>
 class List {
-    Node<T>* head;
-    Node<T>* tail;
 
-    Node<T>* start;
-    Node<T>* finish;
+    Node<T>* n_remove_first;
+    Node<T>* n_remove_last;
+
+    int countNode;
 
     std::shared_mutex mutex;
 
-    int countNode;
 public:
-    template<class T> friend class ListIterator;
+    friend class ListIterator<T>;
 
     List() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
-
-        start = new Node<T>();
-        finish = new Node<T>();
+        n_remove_first = new Node<T>();
+        n_remove_last = new Node<T>();
         countNode = 0;
 
-        start->Ref_count = 1;
-        start->next = finish;
-        start->prev = nullptr;
-        start->Value = -1;
+        n_remove_first->Ref_count = 1;
+        n_remove_first->next = n_remove_last;
+        n_remove_first->prev = nullptr;
+        n_remove_first->Value = 000;
 
-        finish->Ref_count = 1;
-        finish->next = nullptr;
-        finish->prev = start;
-        finish->Value = -2;
-
-        head = start;
-        tail = finish;
+        n_remove_last->Ref_count = 1;
+        n_remove_last->next = nullptr;
+        n_remove_last->prev = n_remove_first;
+        n_remove_last->Value = 001;
     }
 
     ~List() {
-
-        Node<T>* node = start;
+        Node<T>* node = n_remove_first;
 
         while (node != nullptr) {
             Node<T>* pnode = node->next;
             delete node;
             node = pnode;
         }
-        //		_CrtDumpMemoryLeaks();
+
     }
 
 
     void acquire(Node<T>** node, Node<T>* pnode) {
-
         *node = pnode;
         pnode->Ref_count++;
     }
 
 
     void release(Node<T>* node) {
-
         node->Ref_count--;
 
         if (node->Ref_count == 0) {
@@ -80,115 +74,117 @@ public:
                 release(node->next);
                 release(node->prev);
             }
-            node->next = nullptr;
-            node->prev = nullptr;
             delete node;
         }
     }
 
     int CountNode() {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
         return countNode;
     }
 
     int getRef_count(Node<T>* node) {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
         return node->Ref_count;
     }
 
     Node<T>* next(Node<T>* node) {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
         return node->next;
     }
 
     Node<T>* prev(Node<T>* node) {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
         return node->prev;
     }
 
     T getValue(Node<T>* ptr) {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
         return ptr->Value;
     }
 
     Node<T>* getFirst() {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
-        return head->next;
+        return n_remove_first->next;
     }
 
     Node<T>* getLast() {
-
         std::shared_lock<std::shared_mutex> lock(mutex);
-        return tail->prev;
+        return n_remove_last->prev;
     }
 
     ListIterator<T> begin() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
+        std::shared_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
-            ListIterator<T> iter(this, &start);
-            return iter;
+            return ListIterator<T>(&n_remove_first, this);
         }
+
         else {
-            ListIterator<T> iter(this, &start->next);
-            return iter;
+            return ListIterator<T>(&n_remove_first->next, this);
         }
     }
 
     ListIterator<T> end() {
-
-        std::unique_lock<std::shared_mutex> lock(mutex);
+        std::shared_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
-            ListIterator<T> iter(this, &finish);
-            return iter;
+            return ListIterator<T>(&n_remove_last, this);
         }
+
         else {
-            ListIterator<T> iter(this, &finish->prev);
-            return iter;
+            return ListIterator<T>(&n_remove_last->prev, this);
         }
     }
 
-    void Insert() {
 
-        std::unique_lock<std::shared_mutex> lock(mutex);
-
-    }
-
-    void PushFront(T value) {
-
+    void Insert(ListIterator<T> iter, T value) {
         std::unique_lock<std::shared_mutex> lock(mutex);
 
         auto element = new Node<T>();
+        auto iterNode = getNode(iter);
 
-        element->next = start->next;
-        element->prev = start;
+        if (iterNode == n_remove_last) {
+            element->prev = iterNode->prev;
+            element->next = iterNode;
+            iterNode->prev = element;
+            element->prev->next = element;
+        }
+
+        else {
+            element->next = iterNode->next;
+            element->prev = iterNode;
+            iterNode->next = element;
+            element->next->prev = element;
+        }
+
         element->Value = value;
         element->Ref_count += 2;
 
-        element->next->prev = element;
-        start->next = element;
         countNode++;
     }
 
-    void Erase(Node<T>* node) {
+    void PushFront(T value) {
+        auto iter = ListIterator<T>(&n_remove_first, this);
+        Insert(iter, value);
+    }
 
+    void PushBack(T value) {
+        auto iter = ListIterator<T>(&n_remove_last, this);
+        Insert(iter, value);
+    }
+
+    void Erase(Node<T>* node) {
         std::unique_lock<std::shared_mutex> lock(mutex);
+
         Node<T>* next_node = node->next;
         Node<T>* prev_node = node->prev;
         node->delete_tag = true;
 
-        if (node != finish) {
+        if (node != n_remove_last) {
             next_node->prev = prev_node;
             node->Ref_count -= 1;
         }
 
-        if (node != start) {
+        if (node != n_remove_first) {
             prev_node->next = next_node;
             node->Ref_count -= 1;
         }
@@ -205,29 +201,30 @@ class ListIterator {
 
 public:
 
-    ListIterator<T>() {
+    friend class List<T>;
 
+    ListIterator<T>() {
         iter_node = nullptr;
     }
 
-
-    ListIterator<T>(List<T>* list, Node<T>** node) {
-
-        iter_list = list;
+    ListIterator<T>(Node<T>** node, List<T>* list) {
         iter_node = *node;
+        iter_list = list;
 
-        iter_node->Ref_count += 1;
+        (*node)->Ref_count++;
+    }
+
+    friend Node<T>* getNode(ListIterator<T> iter) {
+        return iter.iter_node;
     }
 
     int& operator*() {
-
-        std::shared_lock<std::shared_mutex> lock(iter_list->mutex);
         return iter_node->Value;
     }
 
     ListIterator<T>& operator++() {
-
         std::unique_lock<std::shared_mutex> lock(iter_list->mutex);
+
         Node<T>* prev(iter_node);
         iter_list->acquire(&iter_node, iter_node->next);
         iter_list->release(prev);
@@ -235,23 +232,21 @@ public:
     }
 
     ListIterator<T>& operator--() {
-
         std::unique_lock<std::shared_mutex> lock(iter_list->mutex);
+
         Node<T>* next(iter_node);
         iter_list->acquire(&iter_node, iter_node->prev);
         iter_list->release(next);
         return *this;
     }
 
-    ListIterator<T> operator++(int){
-
+    ListIterator<T> operator++(int) {
         ListIterator<T> prev(*this);
         ++(*this);
         return prev;
     }
 
-    ListIterator<T> operator--(int){
-
+    ListIterator<T> operator--(int) {
         ListIterator<T> iter(*this);
         --(*this);
         return iter;
@@ -259,3 +254,4 @@ public:
 };
 
 
+#endif //UNTITLED1_CONSIST_LIST_H

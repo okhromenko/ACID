@@ -1,16 +1,23 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
   "CXX"
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/79841/CLionProjects/untitled1/Source.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Source.cpp.obj"
-  "C:/Users/79841/CLionProjects/untitled1/catch_amalgamated.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/catch_amalgamated.cpp.obj"
+  "C:/Users/79841/CLionProjects/untitled1/Google_tests/Source.cpp" "C:/Users/79841/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Google_tests/Source.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "MSVC")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
   )
 
 # Targets to which this target links.
