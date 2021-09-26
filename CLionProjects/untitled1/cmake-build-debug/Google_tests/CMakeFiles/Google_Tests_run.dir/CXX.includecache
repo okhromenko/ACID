@@ -345,6 +345,10 @@ C:/Users/79841/CLionProjects/untitled1/Google_tests/gtest/gtest.h
 C:/Users/79841/CLionProjects/untitled1/Consist_list.h
 thread
 -
+barrier
+-
+condition_variable
+-
 vector
 -
 

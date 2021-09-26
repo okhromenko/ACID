@@ -114,7 +114,7 @@ public:
     }
 
     ListIterator<T> begin() {
-        std::shared_lock<std::shared_mutex> lock(mutex);
+        std::unique_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
             return ListIterator<T>(&n_remove_first, this);
         }
@@ -125,7 +125,7 @@ public:
     }
 
     ListIterator<T> end() {
-        std::shared_lock<std::shared_mutex> lock(mutex);
+        std::unique_lock<std::shared_mutex> lock(mutex);
         if (countNode == 0) {
             return ListIterator<T>(&n_remove_last, this);
         }
@@ -219,6 +219,7 @@ public:
     }
 
     int& operator*() {
+        std::shared_lock<std::shared_mutex> lock(iter_list->mutex);
         return iter_node->Value;
     }
 
@@ -231,7 +232,7 @@ public:
         return *this;
     }
 
-    ListIterator<T>& operator--() {
+    ListIterator<T>& operator--() { // префиксный
         std::unique_lock<std::shared_mutex> lock(iter_list->mutex);
 
         Node<T>* next(iter_node);
@@ -246,7 +247,7 @@ public:
         return prev;
     }
 
-    ListIterator<T> operator--(int) {
+    ListIterator<T> operator--(int) {  // постфиксный
         ListIterator<T> iter(*this);
         --(*this);
         return iter;
