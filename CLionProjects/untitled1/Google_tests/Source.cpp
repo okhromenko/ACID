@@ -9,7 +9,7 @@ TEST(ListTest, PushFront) {
     List<int> list;
     int n_list = 1000;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
 
@@ -22,7 +22,7 @@ TEST(ListTest, PushFront) {
     EXPECT_EQ(list.getValue(list.prev(list.getLast())), 999);
 
     auto nextNode = list.getFirst();
-    for (int i = 50; i > 1; i--){
+    for (int i = 50; i > 1; i--) {
         nextNode = list.next(nextNode);
     }
 
@@ -43,7 +43,7 @@ TEST(ListTest, Insert) {
     EXPECT_EQ(list.getRef_count(list.getFirst()), 2);
 
     auto node = list.getFirst();
-    for (int i = 1; i <= n_list; i++){
+    for (int i = 1; i <= n_list; i++) {
         EXPECT_EQ(list.getValue(node), i);
         node = list.next(node);
     }
@@ -63,7 +63,7 @@ TEST(ListTest, InsertBack) {
     EXPECT_EQ(list.getRef_count(list.getLast()), 2);
 
     auto node = list.getFirst();
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         EXPECT_EQ(list.getValue(node), i);
         node = list.next(node);
     }
@@ -81,7 +81,7 @@ TEST(ListTest, PushBack) {
     EXPECT_EQ(list.CountNode(), n_list);
 
     auto node = list.getFirst();
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         EXPECT_EQ(list.getValue(node), i);
         node = list.next(node);
     }
@@ -95,8 +95,8 @@ TEST(ListTest, BeginEnd) {
     ListIterator<int> iter_begin_off_list = list.begin();
     ListIterator<int> iter_end_off_list = list.end();
 
-    for (int i = n_list; i > 0; i--){
-    list.PushFront(i);
+    for (int i = n_list; i > 0; i--) {
+        list.PushFront(i);
     }
 
     ListIterator<int> iter_begin_inside_list = list.begin();
@@ -115,38 +115,38 @@ TEST(ListTest, BeginEnd) {
 }
 
 
-TEST(ListTest, Ref_count){
+TEST(ListTest, Ref_count) {
     List<int> list;
     vector<ListIterator<int>> iter;
     int n_list = 1000;
     int count = n_list;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
         iter.emplace_back(list.begin());
     }
 
     auto node = list.getFirst();
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         EXPECT_EQ(list.getRef_count(node), 3);
         node = list.next(node);
     }
 
-    for (auto & i : iter){
+    for (auto& i : iter) {
         EXPECT_EQ(*i, count);
         count--;
     }
 }
 
 
-TEST(ListTest, IncDecPre){
+TEST(ListTest, IncDecPre) {
     List<int> list;
     int n_list = 1000;
 
     ListIterator<int> iter_begin = list.begin();
     ListIterator<int> iter_end = list.end();
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
 
@@ -161,7 +161,7 @@ TEST(ListTest, IncDecPre){
     --iter_begin;
     --iter_begin;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         ++iter_begin;
     }
 
@@ -173,18 +173,16 @@ TEST(ListTest, IncDecPre){
 }
 
 
-TEST(ListTest, IncDecPost){
+TEST(ListTest, IncDecPost) {
     List<int> list;
     int n_list = 1000;
 
     ListIterator<int> iter_begin = list.begin();
     ListIterator<int> iter_end = list.end();
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
-
-    EXPECT_EQ(list.getRef_count((list.getFirst())), 2);
 
     iter_begin++;
     EXPECT_EQ(list.getRef_count((list.getFirst())), 3);
@@ -195,7 +193,7 @@ TEST(ListTest, IncDecPost){
     iter_begin--;
     iter_begin--;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         iter_begin++;
     }
 
@@ -207,11 +205,11 @@ TEST(ListTest, IncDecPost){
 }
 
 
-TEST(ListTest, Erase){
+TEST(ListTest, Erase) {
     List<int> list;
     int n_list = 1000;
 
-    for (int i = 0; i < n_list; i++){
+    for (int i = 0; i < n_list; i++) {
         list.PushFront(i);
     }
 
@@ -224,7 +222,7 @@ TEST(ListTest, Erase){
     EXPECT_EQ(list.getValue(list.next(list.prev(list.getLast()))), 0);
     EXPECT_EQ(list.CountNode(), n_list - 1);
 
-    for (int i = 0; i < n_list - 1; i++){
+    for (int i = 0; i < n_list - 1; i++) {
         list.Erase((list.getLast()));
     }
 
@@ -232,11 +230,11 @@ TEST(ListTest, Erase){
 }
 
 
-TEST(ListTest, EraseWithIter){
+TEST(ListTest, EraseWithIter) {
     List<int> list;
     int n_list = 10;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
 
@@ -263,11 +261,11 @@ TEST(ListTest, EraseWithIter){
 }
 
 
-TEST(ListTest, StepOneIterator){
+TEST(ListTest, StepOneIterator) {
     List<int> list;
     int n_list = 10;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
 
@@ -286,11 +284,11 @@ TEST(ListTest, StepOneIterator){
 }
 
 
-TEST(ListTest, StepSeveralIterator){
+TEST(ListTest, StepSeveralIterator) {
     List<int> list;
     int n_list = 10;
 
-    for (int i = n_list; i > 0; i--){
+    for (int i = n_list; i > 0; i--) {
         list.PushFront(i);
     }
 

@@ -103,21 +103,21 @@ public:
     }
 
     ListIterator<T> begin() {
-        if (countNode == 0){
+        if (countNode == 0) {
             return ListIterator<T>(&n_remove_first, this);
         }
 
-        else{
+        else {
             return ListIterator<T>(&n_remove_first->next, this);
         }
     }
 
     ListIterator<T> end() {
-        if (countNode == 0){
+        if (countNode == 0) {
             return ListIterator<T>(&n_remove_last, this);
         }
 
-        else{
+        else {
             return ListIterator<T>(&n_remove_last->prev, this);
         }
     }
@@ -127,14 +127,14 @@ public:
         auto element = new Node<T>();
         auto iterNode = getNode(iter);
 
-        if (iterNode == n_remove_last){
+        if (iterNode == n_remove_last) {
             element->prev = iterNode->prev;
             element->next = iterNode;
             iterNode->prev = element;
             element->prev->next = element;
         }
 
-        else{
+        else {
             element->next = iterNode->next;
             element->prev = iterNode;
             iterNode->next = element;
@@ -188,14 +188,14 @@ public:
         iter_node = nullptr;
     }
 
-    ListIterator<T>(Node<T>** node, List<T>* list){
+    ListIterator<T>(Node<T>** node, List<T>* list) {
         iter_node = *node;
         iter_list = list;
 
         (*node)->Ref_count++;
     }
 
-    friend Node<T>* getNode(ListIterator<T> iter){
+    friend Node<T>* getNode(ListIterator<T> iter) {
         return iter.iter_node;
     }
 
@@ -217,13 +217,13 @@ public:
         return *this;
     }
 
-    ListIterator<T> operator++(int){
+    ListIterator<T> operator++(int) {
         ListIterator<T> prev(*this);
         ++(*this);
         return prev;
     }
 
-    ListIterator<T> operator--(int){
+    ListIterator<T> operator--(int) {
         ListIterator<T> iter(*this);
         --(*this);
         return iter;
