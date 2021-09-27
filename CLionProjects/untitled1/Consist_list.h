@@ -16,67 +16,11 @@ public:
 };
 
 template <class T>
-class List;
-
-
-template <class T>
-class ListIterator {
-
-    Node<T>* iter_node;
-    List<T>* iter_list;
-
-public:
-
-    ListIterator<T>() {
-        iter_node = nullptr;
-    }
-
-    ListIterator<T>(Node<T>** node, List<T>* list){
-        iter_node = *node;
-        iter_list = list;
-
-        (*node)->Ref_count++;
-    }
-
-    friend Node<T>* getNode(ListIterator<T> iter){
-        return iter.iter_node;
-    }
-
-    int& operator*() {
-        return iter_node->Value;
-    }
-
-    ListIterator<T>& operator++() {
-        Node<T>* prev(iter_node);
-        iter_list->acquire(&iter_node, iter_node->next);
-        iter_list->release(prev);
-        return *this;
-    }
-
-    ListIterator<T>& operator--() {
-        Node<T>* next(iter_node);
-        iter_list->acquire(&iter_node, iter_node->prev);
-        iter_list->release(next);
-        return *this;
-    }
-
-    ListIterator<T> operator++(int){
-        ListIterator<T> prev(*this);
-        ++(*this);
-        return prev;
-    }
-
-    ListIterator<T> operator--(int){
-        ListIterator<T> iter(*this);
-        --(*this);
-        return iter;
-    }
-};
+class ListIterator;
 
 
 template <class T>
 class List {
-
     Node<T>* n_remove_first;
     Node<T>* n_remove_last;
 
@@ -93,16 +37,15 @@ public:
         n_remove_first->Ref_count = 1;
         n_remove_first->next = n_remove_last;
         n_remove_first->prev = nullptr;
-        n_remove_first->Value = 000;
+        n_remove_first->Value = -2;
 
         n_remove_last->Ref_count = 1;
         n_remove_last->next = nullptr;
         n_remove_last->prev = n_remove_first;
-        n_remove_last->Value = 001;
+        n_remove_last->Value = -1;
     }
 
     ~List() {
-
         Node<T>* node = n_remove_first;
 
         while (node != nullptr) {
@@ -110,7 +53,6 @@ public:
             delete node;
             node = pnode;
         }
-
     }
 
 
@@ -230,6 +172,61 @@ public:
             node->Ref_count -= 1;
         }
         countNode--;
+    }
+};
+
+
+template <class T>
+class ListIterator {
+
+    Node<T>* iter_node;
+    List<T>* iter_list;
+
+public:
+
+    ListIterator<T>() {
+        iter_node = nullptr;
+    }
+
+    ListIterator<T>(Node<T>** node, List<T>* list){
+        iter_node = *node;
+        iter_list = list;
+
+        (*node)->Ref_count++;
+    }
+
+    friend Node<T>* getNode(ListIterator<T> iter){
+        return iter.iter_node;
+    }
+
+    int& operator*() {
+        return iter_node->Value;
+    }
+
+    ListIterator<T>& operator++() {
+        Node<T>* prev(iter_node);
+        iter_list->acquire(&iter_node, iter_node->next);
+        iter_list->release(prev);
+        return *this;
+    }
+
+    ListIterator<T>& operator--() {
+        Node<T>* next(iter_node);
+        iter_list->acquire(&iter_node, iter_node->prev);
+        iter_list->release(next);
+        return *this;
+    }
+
+    ListIterator<T> operator++(int){
+        ListIterator<T> prev(*this);
+        ++(*this);
+        return prev;
+    }
+
+    ListIterator<T> operator--(int){
+        ListIterator<T> iter(*this);
+        --(*this);
+        return iter;
     }
 };
 
